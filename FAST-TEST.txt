@@ -1,0 +1,11 @@
+FAST TEST
+1. Run with Live Server.
+2. Sign in as @shell.
+3. Open developer/publish.html.
+4. Choose a small JSON/ZIP/PNG first.
+5. Press Publish.
+6. Success should show an ast_XXXXXXXX ID and the object should appear in R2.
+
+If you get AUTH_*: token verification/Worker issue.
+If EMAIL_NOT_VERIFIED: verify the Firebase email.
+If FILE_TYPE_NOT_ALLOWED: test with JSON, ZIP, PNG/JPG/WEBP or GLB.

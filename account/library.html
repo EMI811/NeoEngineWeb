@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050506"><title>My Library — NeoCorp</title><link rel="stylesheet" href="../style.css"></head><body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../index.html">NeoCorp</a>
+    <nav class="main-nav">
+      <a href="../products.html">Products</a>
+      <a href="../library.html">Library</a>
+      <a href="../developers.html">Developers</a>
+      <a href="../resources.html">Resources</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button js-search" aria-label="Search">⌕</button>
+      <button class="account-button js-account"><span class="js-account-text">Sign in</span></button>
+    </div>
+  </div>
+</header>
+<main><section class="page page-hero small"><p class="eyebrow">NeoID</p><h1>My Library</h1><p>Saved, owned and downloaded content.</p></section><section class="page"><div class="library-tabs"><button class="active">All</button><button>Saved</button><button>Owned</button><button>Downloads</button></div><div class="empty-state"><b>Your Library is ready for the real catalog.</b><p>When asset ownership and saves are connected, they will appear here.</p><a class="button button-primary" href="../library.html">Explore Library</a></div></section></main>
+<footer><div class="page footer-inner"><strong>NeoCorp</strong><span>© 2026 NeoCorp</span></div></footer>
+<div class="search-panel glass-panel" id="searchPanel" hidden>
+  <span>⌕</span><input id="globalSearch" type="search" placeholder="Search NeoCorp…" autocomplete="off"><kbd>ESC</kbd>
+</div>
+<div class="account-popover glass-panel" id="accountPopover" hidden>
+  <div class="account-head"><div class="avatar large" id="menuAvatar">N</div><div><strong id="accountName">NeoID</strong><span id="accountHandle">Not signed in</span></div></div>
+  <div id="signedInMenu" hidden>
+    <div class="menu-separator"></div>
+    <a class="menu-item" href="../account/profile.html"><span>○</span><div><b>Profile</b><small>Your public NeoID</small></div></a>
+    <a class="menu-item" href="../account/library.html"><span>◇</span><div><b>My Library</b><small>Saved and owned assets</small></div></a>
+    <a class="menu-item" href="../developer/publish.html"><span>＋</span><div><b>Publish Asset</b><small>Developer tools</small></div></a>
+    <a class="menu-item" href="../developer/dashboard.html"><span>▦</span><div><b>Developer</b><small>Assets and analytics</small></div></a>
+    <div class="menu-separator"></div>
+    <a class="menu-item" href="../account/settings.html"><span>⚙</span><div><b>Settings</b><small>NeoID preferences</small></div></a>
+    <a class="menu-item" href="../resources.html"><span>?</span><div><b>Help</b><small>Support and documentation</small></div></a>
+    <div class="menu-separator"></div>
+    <button class="menu-item danger" id="signOutButton"><span>↗</span><div><b>Sign out</b><small>End this session</small></div></button>
+  </div>
+  <div id="signedOutMenu"><p class="popover-copy">Sign in to access your NeoID, Library and developer tools.</p><button class="button button-primary full" id="openLoginFromMenu">Sign in</button><button class="button button-quiet full" id="openRegisterFromMenu">Create NeoID</button></div>
+</div>
+<div class="modal-backdrop" id="authModal" hidden>
+  <section class="auth-modal glass-panel">
+    <button class="modal-close" data-close-modal>×</button><div class="auth-brand">NeoCorp</div>
+    <div id="loginView"><h2>Welcome back.</h2><p>Sign in with your NeoID account.</p>
+      <form id="loginForm"><label>Email<input id="loginEmail" type="email" required></label><label>Password<input id="loginPassword" type="password" required></label><button class="button button-primary full">Sign in</button></form>
+      <button class="text-button" id="forgotPasswordButton">Forgot password?</button><p class="auth-switch">New to NeoCorp? <button id="showRegister">Create NeoID</button></p>
+    </div>
+    <div id="registerView" hidden><h2>Create NeoID.</h2><p>One identity across NeoCorp.</p>
+      <form id="registerForm"><label>Username<input id="registerUsername" required></label><label>Display name<input id="registerDisplayName" required></label><label>Email<input id="registerEmail" type="email" required></label><label>Password<input id="registerPassword" type="password" minlength="6" required></label><button class="button button-primary full">Create NeoID</button></form>
+      <p class="auth-switch">Already have one? <button id="showLogin">Sign in</button></p>
+    </div><div class="auth-message" id="authMessage"></div>
+  </section>
+</div>
+<div class="neo-toast glass-panel" id="neoToast"></div>
+<script type="module" src="../firebase.js"></script><script src="../app.js"></script></body></html>

@@ -1,0 +1,14 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, reload } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyDOnDjgViAiGyvy2RyK47nFAySbTMlZK6c",authDomain:"neoengine-d7ead.firebaseapp.com",databaseURL:"https://neoengine-d7ead-default-rtdb.firebaseio.com",projectId:"neoengine-d7ead",storageBucket:"neoengine-d7ead.firebasestorage.app",messagingSenderId:"659264177905",appId:"1:659264177905:web:8c3a1ae6457506ee5e4b50",measurementId:"G-3BBS1L0VLB"};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getDatabase(app);
+async function getNeoProfile(uid){const s=await get(ref(db,`users/${uid}`));return s.exists()?s.val():null}
+async function createNeoID(username,displayName,email,password){username=username.trim().toLowerCase();if(!/^[a-z0-9._-]{3,24}$/.test(username))throw new Error("Username must be 3–24 characters.");const n=await get(ref(db,`usernames/${username}`));if(n.exists())throw new Error("That username is already taken.");const c=await createUserWithEmailAndPassword(auth,email.trim(),password);const p={username,displayName:displayName.trim(),email:c.user.email,developer:false,createdAt:Date.now()};await set(ref(db,`users/${c.user.uid}`),p);await set(ref(db,`usernames/${username}`),c.user.uid);await sendEmailVerification(c.user);return{user:c.user,profile:p}}
+async function loginNeoID(email,password){return(await signInWithEmailAndPassword(auth,email.trim(),password)).user}
+async function logoutNeoID(){await signOut(auth)} async function resetNeoPassword(email){await sendPasswordResetEmail(auth,email.trim())}
+async function resendVerificationEmail(){if(!auth.currentUser)throw new Error("No active NeoID session.");await sendEmailVerification(auth.currentUser)}
+async function refreshNeoUser(){if(!auth.currentUser)return null;await reload(auth.currentUser);return auth.currentUser}
+async function getNeoToken(force=false){if(!auth.currentUser)throw new Error("No active NeoID session.");return await auth.currentUser.getIdToken(force)}
+window.NeoFirebase={auth,db,getNeoProfile,createNeoID,loginNeoID,logoutNeoID,resetNeoPassword,resendVerificationEmail,refreshNeoUser,getNeoToken};window.dispatchEvent(new Event("neoFirebaseReady"));
+onAuthStateChanged(auth,async user=>{let profile=null;if(user)try{profile=await getNeoProfile(user.uid)}catch(e){console.warn(e)}window.dispatchEvent(new CustomEvent("neo-auth-state",{detail:{user,profile}}))});

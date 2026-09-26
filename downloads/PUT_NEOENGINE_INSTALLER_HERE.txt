@@ -1,0 +1,6 @@
+Place the REAL NeoEngine Windows installer here with exactly this filename:
+
+NeoEngine-Setup.exe
+
+The Home download buttons are already connected to downloads/NeoEngine-Setup.exe.
+Do not rename an unrelated file to .exe. Replace this note when NeoEngine produces a real installer.
