@@ -1,24 +1,109 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050506"><title>My Library — NeoCorp</title><link rel="stylesheet" href="../style.css"></head><body>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="../index.html">NeoCorp</a>
-    <nav class="main-nav">
-      <a href="../products.html">Products</a>
-      <a href="../library.html">Library</a>
-      <a href="../developers.html">Developers</a>
-      <a href="../resources.html">Resources</a>
-    </nav>
-    <div class="header-actions">
-      <button class="icon-button js-search" aria-label="Search">⌕</button>
-      <button class="account-button js-account"><span class="js-account-text">Sign in</span></button>
-    </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#050506">
+    <title>Portal — NeoCorp</title>
+    <meta name="neocorp-api-base" content="https://neocorp-api.jorgeemilianolaredovalladares.workers.dev">
+    <link rel="stylesheet" href="../style.css"></head><body>
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="brand" href="../index.html">NeoCorp</a>
+          <nav class="main-nav">
+            <a href="../products.html">Products</a>
+            <a href="../library.html">Library</a>
+            <a href="../developers.html">Developers</a>
+            <a href="../resources.html">Resources</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-button js-search" aria-label="Search">⌕</button>
+            <button class="account-button js-account"><span class="js-account-text">Sign in</span></button>
+          </div>
+        </div>
+      </header>
+      <main class="portal-page">
+        <section class="page portal-hero">
+          <div class="portal-hero-copy">
+            <p class="eyebrow">NEOID · PERSONAL SPACE</p>
+            <h1>Portal<span class="portal-period">.</span></h1>
+            <p>Todos tus recursos, archivos y assets en un solo lugar.</p>
+          </div>
+          <button class="button button-primary portal-upload-trigger" id="portalOpenUpload" type="button"><span class="portal-plus" aria-hidden="true">＋</span> Upload files</button>
+        </section>
+  <section class="page portal-content" aria-labelledby="portalAssetsHeading">
+  <div class="portal-heading-row">
+    <div><p class="eyebrow">YOUR WORKSPACE</p><h2 id="portalAssetsHeading">Assets & files</h2><p class="portal-intro">Archivos que has subido a tu espacio NeoCorp.</p></div>
+    <div class="portal-user-chip"><span class="portal-user-dot"></span><span id="portalUserName">NeoID</span></div>
   </div>
-</header>
-<main><section class="page page-hero small"><p class="eyebrow">NeoID</p><h1>My Library</h1><p>Saved, owned and downloaded content.</p></section><section class="page"><div class="library-tabs"><button class="active">All</button><button>Saved</button><button>Owned</button><button>Downloads</button></div><div class="empty-state"><b>Your Library is ready for the real catalog.</b><p>When asset ownership and saves are connected, they will appear here.</p><a class="button button-primary" href="../library.html">Explore Library</a></div></section></main>
-<footer><div class="page footer-inner"><strong>NeoCorp</strong><span>© 2026 NeoCorp</span></div></footer>
-<div class="search-panel glass-panel" id="searchPanel" hidden>
-  <span>⌕</span><input id="globalSearch" type="search" placeholder="Search NeoCorp…" autocomplete="off"><kbd>ESC</kbd>
+  <div class="portal-toolbar">
+    <div class="portal-tabs" role="tablist" aria-label="Filter assets">
+      <button class="active" type="button" role="tab" aria-selected="true" data-portal-filter="all">All files</button>
+      <button type="button" role="tab" aria-selected="false" data-portal-filter="recent">Recent</button>
+    </div>
+    <label class="portal-search"><span aria-hidden="true">⌕</span><input id="portalSearch" type="search" placeholder="Search your files" autocomplete="off" aria-label="Search your files"></label>
+  </div>
+  <div class="portal-notice" id="portalNotice" role="status" hidden></div>
+  <div class="portal-loading" id="portalLoading"><span class="portal-spinner"></span><span>Loading your assets…</span></div>
+  <div class="portal-assets-grid" id="portalAssetsGrid" aria-live="polite"></div>
+  <div class="portal-empty" id="portalEmpty" hidden>
+    <div class="portal-empty-mark" aria-hidden="true">＋</div>
+    <h3 id="portalEmptyTitle">Your space starts here.</h3>
+    <p id="portalEmptyCopy">Sube tu primer archivo y aparecerá aquí.</p>
+    <button class="button button-glass" id="portalEmptyUpload" type="button">Upload your first file</button>  
+  </div>
+  </section>
+</main>
+
+<div class="portal-modal-backdrop" id="portalUploadModal" hidden>
+
+  <section class="portal-modal glass-panel" role="dialog" aria-modal="true" aria-labelledby="portalUploadTitle">
+
+    <button class="modal-close" id="portalCloseUpload" type="button" aria-label="Close">×</button>
+
+    <p class="eyebrow">NEOCORP PORTAL</p>
+
+    <h2 id="portalUploadTitle">Add to your space.</h2>
+
+    <p class="portal-modal-copy">Sube un asset o archivo a tu biblioteca personal.</p>
+
+    <label class="portal-dropzone" id="portalDropzone" for="portalFileInput">
+
+      <span class="portal-drop-icon" aria-hidden="true">↑</span>
+
+      <strong id="portalFilePrompt">Choose a file or drag it here</strong>
+
+      <span>ZIP, JSON, GLTF, GLB, BIN, PNG, JPG o WEBP</span>
+
+      <span class="portal-file-limit">Maximum file size: 500 MB</span>
+
+      <input id="portalFileInput" type="file" accept=".zip,.json,.gltf,.glb,.bin,.png,.jpg,.jpeg,.webp,application/zip,application/json,model/gltf+json,model/gltf-binary,application/octet-stream,image/png,image/jpeg,image/webp">
+
+    </label>
+
+    <div class="portal-selected-file" id="portalSelectedFile" hidden></div>
+
+    <div class="portal-upload-progress" id="portalUploadProgress" hidden><span></span></div>
+
+    <p class="portal-upload-status" id="portalUploadStatus" role="status"></p>
+
+    <div class="portal-modal-actions"><button class="button button-quiet" id="portalCancelUpload" type="button">Cancel</button><button class="button button-primary" id="portalStartUpload" type="button" disabled>Upload</button></div>
+
+    <p class="portal-privacy-note">Los archivos se guardan bajo tu cuenta. No subas información sensible.</p>
+
+  </section>
+
 </div>
+
+<footer><div class="page footer-inner"><strong>NeoCorp</strong><span>© 2026 NeoCorp</span></div></footer>
+
+<div class="search-panel glass-panel" id="searchPanel" hidden>
+
+
+  <span>⌕</span><input id="globalSearch" type="search" placeholder="Search NeoCorp…" autocomplete="off"><kbd>ESC</kbd>
+
+</div>
+
 <div class="account-popover glass-panel" id="accountPopover" hidden>
   <div class="account-head"><div class="avatar large" id="menuAvatar">N</div><div><strong id="accountName">NeoID</strong><span id="accountHandle">Not signed in</span></div></div>
   <div id="signedInMenu" hidden>
@@ -49,4 +134,4 @@
   </section>
 </div>
 <div class="neo-toast glass-panel" id="neoToast"></div>
-<script type="module" src="../firebase.js"></script><script src="../app.js"></script></body></html>
+<script type="module" src="../firebase.js"></script><script src="../app.js"></script><script src="portal.js"></script></body></html>
